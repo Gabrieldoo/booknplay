@@ -20,8 +20,13 @@
 
                 <div class="d-flex flex-column flex-sm-row gap-3">
                     @auth
-                        <a href="/booking" class="btn btn-primary btn-lg px-4">Booking Sekarang</a>
-                        <a href="/userdashboard" class="btn btn-outline-light btn-lg px-4">Buka Dashboard</a>
+                        @if(auth()->user()->role === 'admin')
+                            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg px-4">Buka Admin Dashboard</a>
+                            <a href="{{ route('admin.bookings.index') }}" class="btn btn-outline-light btn-lg px-4">Kelola Booking</a>
+                        @else
+                            <a href="{{ route('booking') }}" class="btn btn-primary btn-lg px-4">Booking Sekarang</a>
+                            <a href="{{ route('userdashboard') }}" class="btn btn-outline-light btn-lg px-4">Buka Dashboard</a>
+                        @endif
                     @else
                         <a href="/register" class="btn btn-primary btn-lg px-4">Mulai Sekarang</a>
                         <a href="/login" class="btn btn-outline-light btn-lg px-4">Login</a>

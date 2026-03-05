@@ -48,8 +48,8 @@
         <div class="collapse navbar-collapse mt-3 mt-lg-0" id="adminNav">
             <div class="navbar-nav me-auto">
                 <a href="/dashboard" class="nav-link">Dashboard</a>
-                <a href="/booking" class="nav-link">Booking</a>
-                <a href="/chatbot" class="nav-link">Chatbot</a>
+                <a href="{{ route('admin.bookings.index') }}" class="nav-link">Manage Booking</a>
+                <a href="{{ route('contact') }}" class="nav-link">Contact</a>
             </div>
             <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
                 <span class="text-secondary">Welcome, {{ auth()->user()->name ?? 'Admin' }}</span>
@@ -65,7 +65,28 @@
 <main class="container-fluid px-3 px-md-4 py-4">
     @yield('content')
 </main>
+@include('partials.footer')
+@include('partials.whatsapp-button')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    .site-footer{
+        background:#07101f;
+        border-top:1px solid rgba(255,255,255,.12);
+    }
+    .wa-float{
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        z-index:1040;
+        background:#1fa855;
+        color:#fff;
+        text-decoration:none;
+        font-weight:600;
+        border-radius:999px;
+        padding:10px 16px;
+        box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+</style>
 </body>
 </html>

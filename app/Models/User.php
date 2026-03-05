@@ -6,6 +6,7 @@ namespace App\Models;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable 
@@ -60,10 +61,20 @@ class User extends Authenticatable
         'created_at',
     ];
 
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     /**
      * Access to Orchid dashboard
      */
-    public function hasAccess(string $permit, bool $cache = true): bool
+public function hasAccess(string $permit, bool $cache = true): bool
 {
     return $this->role === 'admin';
 }

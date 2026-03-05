@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class UserMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user() || $request->user()->role !== 'admin') {
-            abort(403, 'Admin access only.');
+        if (! $request->user() || $request->user()->role !== 'user') {
+            abort(403, 'User access only.');
         }
 
         return $next($request);

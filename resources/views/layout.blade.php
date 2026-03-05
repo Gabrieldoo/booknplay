@@ -60,14 +60,21 @@
         <div class="collapse navbar-collapse mt-3 mt-lg-0" id="mainNav">
             <div class="ms-auto d-flex flex-column flex-lg-row gap-2 gap-lg-3 align-items-start align-items-lg-center">
                 @auth
-                    <a href="/userdashboard" class="nav-link p-0">Dashboard</a>
-                    <a href="/booking" class="nav-link p-0">Booking</a>
-                    <a href="/chatbot" class="nav-link p-0">Chatbot</a>
+                    @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('dashboard') }}" class="nav-link p-0">Dashboard</a>
+                        <a href="{{ route('admin.bookings.index') }}" class="nav-link p-0">Manage Booking</a>
+                    @else
+                        <a href="{{ route('userdashboard') }}" class="nav-link p-0">Dashboard</a>
+                        <a href="{{ route('booking') }}" class="nav-link p-0">Booking</a>
+                        <a href="{{ route('chatbot') }}" class="nav-link p-0">Chatbot</a>
+                    @endif
+                    <a href="{{ route('contact') }}" class="nav-link p-0">Contact</a>
                     <form action="/logout" method="POST" class="d-inline">
                         @csrf
                         <button class="btn btn-sm btn-danger">Logout</button>
                     </form>
                 @else
+                    <a href="{{ route('contact') }}" class="nav-link p-0">Contact</a>
                     <a href="/login" class="nav-link p-0">Login</a>
                     <a href="/register" class="btn btn-primary btn-sm">Register</a>
                 @endauth
@@ -77,7 +84,32 @@
 </nav>
 
 @yield('content')
+@include('partials.footer')
+@include('partials.whatsapp-button')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    .site-footer{
+        background:rgba(3,10,19,0.85);
+        border-top:1px solid rgba(255,255,255,.12);
+    }
+    .wa-float{
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        z-index:1040;
+        background:#1fa855;
+        color:#fff;
+        text-decoration:none;
+        font-weight:600;
+        border-radius:999px;
+        padding:10px 16px;
+        box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .wa-float:hover{
+        background:#188846;
+        color:#fff;
+    }
+</style>
 </body>
 </html>

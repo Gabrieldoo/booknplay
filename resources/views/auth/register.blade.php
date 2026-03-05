@@ -28,8 +28,12 @@
         <label>Konfirmasi Password</label>
         <input type="password" name="password_confirmation" class="form-control"
             placeholder="Ulangi password" required>
+    </div>  
+        @error('password')
+    <div style="color:red;">
+        {{ $message }}
     </div>
-
+@enderror
     <button type="submit" class="btn btn-primary w-100">
         Register
     </button>

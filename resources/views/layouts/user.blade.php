@@ -61,7 +61,9 @@
     <div class="offcanvas-body">
         <a class="menu-link {{ request()->routeIs('userdashboard') ? 'active' : '' }}" href="{{ route('userdashboard') }}">Dashboard</a>
         <a class="menu-link {{ request()->routeIs('booking*') ? 'active' : '' }}" href="{{ route('booking') }}">Booking</a>
+        <a class="menu-link {{ request()->routeIs('booking.calendar') ? 'active' : '' }}" href="{{ route('booking.calendar') }}">Calendar</a>
         <a class="menu-link {{ request()->routeIs('chatbot*') ? 'active' : '' }}" href="{{ route('chatbot') }}">Chatbot</a>
+        <a class="menu-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
         <form action="/logout" method="POST" class="mt-4">
             @csrf
             <button class="btn btn-danger w-100">Logout</button>
@@ -79,7 +81,9 @@
 
             <a class="menu-link {{ request()->routeIs('userdashboard') ? 'active' : '' }}" href="{{ route('userdashboard') }}">Dashboard</a>
             <a class="menu-link {{ request()->routeIs('booking*') ? 'active' : '' }}" href="{{ route('booking') }}">Booking</a>
+            <a class="menu-link {{ request()->routeIs('booking.calendar') ? 'active' : '' }}" href="{{ route('booking.calendar') }}">Calendar</a>
             <a class="menu-link {{ request()->routeIs('chatbot*') ? 'active' : '' }}" href="{{ route('chatbot') }}">Chatbot</a>
+            <a class="menu-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
 
             <form action="/logout" method="POST" class="mt-4">
                 @csrf
@@ -96,7 +100,28 @@
         </main>
     </div>
 </div>
+@include('partials.footer')
+@include('partials.whatsapp-button')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    .site-footer{
+        background:#07101f;
+        border-top:1px solid rgba(255,255,255,.12);
+    }
+    .wa-float{
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        z-index:1040;
+        background:#1fa855;
+        color:#fff;
+        text-decoration:none;
+        font-weight:600;
+        border-radius:999px;
+        padding:10px 16px;
+        box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+</style>
 </body>
 </html>

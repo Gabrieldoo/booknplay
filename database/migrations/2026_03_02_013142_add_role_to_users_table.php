@@ -6,19 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
-{
-    Schema::table('users', function ($table) {
-        $table->string('role')->default('user');
-    });
-}
+    public function up(): void
+    {
+        $hasRole = Schema::hasColumn('users', 'role');
+
+        Schema::table('users', function (Blueprint $table) use ($hasRole): void {
+            if (! $hasRole) {
+                $table->string('role')->default('user')->index();
+            }
+        });
+    }
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        $hasRole = Schema::hasColumn('users', 'role');
+
+        Schema::table('users', function (Blueprint $table) use ($hasRole): void {
+            if ($hasRole) {
+                $table->dropColumn('role');
+            }
         });
     }
 };

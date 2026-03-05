@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -24,25 +23,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // coba login
-        if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-
-            return back()->withErrors([
-                'login' => 'Email atau password salah'
-            ])->withInput($request->only('email'));
-        }
-
-        // regenerate session
+        $request->authenticate();
         $request->session()->regenerate();
 
-        $user = Auth::user();
+        $user = $request->user();
 
-        // redirect sesuai role
-        if ($user->role === 'admin') {
-            return redirect('/admin');
+        if ($user && $user->role === 'admin') {
+            return redirect()->route('dashboard');
         }
 
-        return redirect('/userdashboard');
+        return redirect()->route('userdashboard');
     }
 
     /**
@@ -50,7 +40,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        auth()->guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
